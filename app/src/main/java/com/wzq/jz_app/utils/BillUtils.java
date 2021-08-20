@@ -260,7 +260,13 @@ public class BillUtils {
         bBill.setPayName(coBill.getPayName());
         bBill.setUserid(coBill.getUserid());
         bBill.setContent(coBill.getContent());
-        bBill.setCost(coBill.getCost());
+        String cost = coBill.getCost();
+        try {
+            cost = Sm4Utils.decryptEcb(coBill.getCost());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bBill.setCost(Float.parseFloat(cost));
 
         return bBill;
     }

@@ -1,6 +1,7 @@
 package com.wzq.jz_app.model.bean.remote;
 
 import com.wzq.jz_app.model.bean.local.BBill;
+import com.wzq.jz_app.utils.Sm4Utils;
 
 import cn.bmob.v3.BmobObject;
 
@@ -9,7 +10,7 @@ import cn.bmob.v3.BmobObject;
  */
 public class CoBill extends BmobObject {
 
-    private float cost;  //金额
+    private String cost;  //金额
     private String content;  //内容
     private String userid;  //用户id
     private String payName;  //支付方式
@@ -25,7 +26,12 @@ public class CoBill extends BmobObject {
     }
 
     public CoBill(BBill bBill) {
-        this.cost = bBill.getCost();
+        try {
+            this.cost = Sm4Utils.encryptEcb(Float.toString(bBill.getCost()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.cost = Float.toString(bBill.getCost());
+        }
         this.content = bBill.getContent();
         this.userid = bBill.getUserid();
         this.payName = bBill.getPayName();
@@ -42,7 +48,12 @@ public class CoBill extends BmobObject {
 
     public CoBill(float cost, String content, String userid, String payName, String payImg,
                   String sortName, String sortImg, long crdate, boolean income, int version) {
-        this.cost = cost;
+        try {
+            this.cost = Sm4Utils.encryptEcb(Float.toString(cost));
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.cost = Float.toString(cost);
+        }
         this.content = content;
         this.userid = userid;
         this.payName = payName;
@@ -54,11 +65,11 @@ public class CoBill extends BmobObject {
         this.version = version;
     }
 
-    public float getCost() {
+    public String getCost() {
         return cost;
     }
 
-    public void setCost(float cost) {
+    public void setCost(String cost) {
         this.cost = cost;
     }
 
