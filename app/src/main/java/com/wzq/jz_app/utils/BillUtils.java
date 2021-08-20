@@ -262,7 +262,7 @@ public class BillUtils {
         bBill.setContent(coBill.getContent());
         String cost = coBill.getCost();
         try {
-            cost = Sm4Utils.decryptEcb(coBill.getCost());
+            cost = Des3Util.decrypt(coBill.getCost());
         } catch (Exception e) {
             e.printStackTrace();
         }

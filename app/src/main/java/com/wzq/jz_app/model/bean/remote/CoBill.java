@@ -1,7 +1,7 @@
 package com.wzq.jz_app.model.bean.remote;
 
 import com.wzq.jz_app.model.bean.local.BBill;
-import com.wzq.jz_app.utils.Sm4Utils;
+import com.wzq.jz_app.utils.Des3Util;
 
 import cn.bmob.v3.BmobObject;
 
@@ -27,7 +27,7 @@ public class CoBill extends BmobObject {
 
     public CoBill(BBill bBill) {
         try {
-            this.cost = Sm4Utils.encryptEcb(Float.toString(bBill.getCost()));
+            this.cost = Des3Util.encrypt(Float.toString(bBill.getCost()));
         } catch (Exception e) {
             e.printStackTrace();
             this.cost = Float.toString(bBill.getCost());
@@ -49,7 +49,7 @@ public class CoBill extends BmobObject {
     public CoBill(float cost, String content, String userid, String payName, String payImg,
                   String sortName, String sortImg, long crdate, boolean income, int version) {
         try {
-            this.cost = Sm4Utils.encryptEcb(Float.toString(cost));
+            this.cost = Des3Util.encrypt(Float.toString(cost));
         } catch (Exception e) {
             e.printStackTrace();
             this.cost = Float.toString(cost);

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.wzq.jz_app"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -64,7 +64,7 @@ dependencies {
     //Multitype
     implementation 'me.drakeet.multitype:multitype-ktx:3.5.0'
     //Greendao  数据库创建与管理的框架
-    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'org.greenrobot:greendao:3.3.0'
     //Eventbus 事件依赖
     implementation 'org.greenrobot:eventbus:3.1.1'
     //Bmob  后端云服务平台（下载失败本地导入）
@@ -100,7 +100,7 @@ dependencies {
     //日志
 //    compile 'org.slf4j:log4j-over-slf4j:1.7.30'
     //支持国密SM4
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
+//    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
     //导出数据到Excel架包
     implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
     implementation files('libs\\BmobSDK_3.7.4_20190523.jar')
