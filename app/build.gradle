@@ -97,10 +97,6 @@ dependencies {
     // 用Gson解析json的转换器
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    //日志
-//    compile 'org.slf4j:log4j-over-slf4j:1.7.30'
-    //支持国密SM4
-//    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
     //导出数据到Excel架包
     implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
     implementation files('libs\\BmobSDK_3.7.4_20190523.jar')
