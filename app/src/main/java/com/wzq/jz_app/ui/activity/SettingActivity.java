@@ -2,6 +2,7 @@ package com.wzq.jz_app.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Toast;
@@ -11,9 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.wzq.jz_app.R;
 import com.wzq.jz_app.base.BaseActivity;
+import com.wzq.jz_app.model.bean.local.BBill;
 import com.wzq.jz_app.model.bean.remote.MyUser;
+import com.wzq.jz_app.model.repository.LocalRepository;
 import com.wzq.jz_app.utils.DataClearUtils;
+import com.wzq.jz_app.utils.ExcelUtil;
 import com.wzq.jz_app.utils.GlideCacheUtil;
+import com.wzq.jz_app.utils.MD5Util;
 import com.wzq.jz_app.utils.ProgressUtils;
 import com.wzq.jz_app.utils.SnackbarUtils;
 import com.wzq.jz_app.utils.ToastUtils;
@@ -28,6 +33,9 @@ import cn.bmob.v3.listener.UpdateListener;
 
 import static cn.bmob.v3.Bmob.getApplicationContext;
 
+import java.io.File;
+import java.util.List;
+
 /**
  * 作者：wzq
  * 邮箱：wang_love152@163.com
@@ -37,7 +45,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private Toolbar toolbar;
     private CommonItemLayout changeCL;
-    private CommonItemLayout forgetCL;
+//    private CommonItemLayout forgetCL;
     private CommonItemLayout storeCL;
     private CommonItemLayout payCL;
     private CommonItemLayout exportCL;
@@ -63,7 +71,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.initWidget();
         toolbar = findViewById(R.id.toolbar);
         changeCL = findViewById(R.id.cil_change);
-        forgetCL = findViewById(R.id.cil_forget);
+//        forgetCL = findViewById(R.id.cil_forget);
         storeCL = findViewById(R.id.cil_store);
         payCL = findViewById(R.id.cil_pay);
         exportCL = findViewById(R.id.cil_export);
@@ -86,7 +94,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     protected void initClick() {
         super.initClick();
         changeCL.setOnClickListener(this);
-        forgetCL.setOnClickListener(this);
+//        forgetCL.setOnClickListener(this);
         storeCL.setOnClickListener(this);
         payCL.setOnClickListener(this);
         exportCL.setOnClickListener(this);
@@ -104,13 +112,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 else
                 showChangeDialog();
                 break;
-            case R.id.cil_forget:  //忘记密码
+            /*case R.id.cil_forget:  //忘记密码
                 if (currentUser == null)
 //                    SnackbarUtils.show(mContext, "请先登陆");
                     Toast.makeText(getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
                 else
                 showForgetPwDialog();
-                break;
+                break;*/
             case R.id.cil_store:  //缓存
                 showCacheDialog();
                 break;
@@ -119,19 +127,19 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 //                startActivity(new Intent(this,PayEditActivity.class));
                 break;
             case R.id.cil_export://导出账单
-//                String filename= Environment.getExternalStorageDirectory()+"/AndroidExcelDemo";
-//                File file=new File(filename);
-//                if(!file.exists()){
-//                    file.mkdirs();
-//                }
-//                String excleCountName="/Wangzhiqiang.xls";
-//                String[] title = {"本地id", "服务器端id", "金额","内容","用户id","支付方式","图标","账单分类","分类图标","创建时间","收入支出","版本"};
-//                String sheetName = "demoSheetName";
-//
-//                List<BBill> bBills = LocalRepository.getInstance().getBBills();
-//                filename=filename+excleCountName;
-//                ExcelUtil.initExcel(filename, title);
-//                ExcelUtil.writeObjListToExcel(bBills, filename,getApplicationContext());
+                String filename= Environment.getExternalStorageDirectory()+"/AndroidExcelDemo";
+                File file=new File(filename);
+                if(!file.exists()){
+                    file.mkdirs();
+                }
+                String excleCountName="/Wangzhiqiang.xls";
+                String[] title = {"本地id", "服务器端id", "金额","内容","用户id","支付方式","图标","账单分类","分类图标","创建时间","收入支出","版本"};
+                String sheetName = "demoSheetName";
+
+                List<BBill> bBills = LocalRepository.getInstance().getBBills();
+                filename=filename+excleCountName;
+                ExcelUtil.initExcel(filename, title);
+                ExcelUtil.writeObjListToExcel(bBills, filename,getApplicationContext());
                 break;
             case R.id.exit:
                 exitUser();
@@ -231,11 +239,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         if (currentUser == null)
             return;
         ProgressUtils.show(mContext, "正在修改...");
-        currentUser.setPassword(password);
+        //password md5加密
+        String passwordEncode = MD5Util.encrypt(password);
+        currentUser.setPassword(passwordEncode);
         currentUser.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 ProgressUtils.dismiss();
+                currentUser.setPassword(password);
                 if (e != null)
                     ToastUtils.show(mContext, "修改失败");
                 else {

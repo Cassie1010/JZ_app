@@ -37,11 +37,11 @@
                     android:name="com.wzq.jz_app.ui.fragment.MoreFragment"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />-->
-                <!--<fragment
+                <fragment
                     android:id="@+id/main_activity_mine"
                     android:name="com.wzq.jz_app.ui.fragment.MineFragment"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />-->
+                    android:layout_height="fill_parent" />
             </FrameLayout>
         </FrameLayout>
 
@@ -98,14 +98,14 @@
                 android:layout_weight="1"
                 android:drawableTop="@drawable/footer_more_selector"
                 android:text="更 多"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"/> -->
             <RadioButton
                 android:id="@+id/radio_mine"
                 style="@style/main_tab_bottom"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/footer_mycenter_selector"
                 android:text="我 的"
-                android:textColor="@color/black"/>-->
+                android:textColor="@color/black"/>
         </RadioGroup>
     </LinearLayout>
 

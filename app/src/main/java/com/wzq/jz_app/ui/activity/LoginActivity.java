@@ -15,14 +15,18 @@ import com.wzq.jz_app.base.BaseMVPActivity;
 import com.wzq.jz_app.model.bean.remote.MyUser;
 import com.wzq.jz_app.presenter.LandPresenter;
 import com.wzq.jz_app.presenter.contract.LandContract;
+import com.wzq.jz_app.utils.MD5Util;
 import com.wzq.jz_app.utils.ProgressUtils;
 import com.wzq.jz_app.utils.SnackbarUtils;
 import com.wzq.jz_app.utils.StringUtils;
 import com.wzq.jz_app.utils.ToastUtils;
 import com.wzq.jz_app.widget.OwlView;
 
-import cn.bmob.v3.BmobUser;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -252,8 +256,38 @@ public class LoginActivity extends BaseMVPActivity<LandContract.Presenter>
                                 Toast.makeText(LoginActivity.this,
                                         "请输入正确的邮箱格式", Toast.LENGTH_LONG).show();
                             }else {
+                                BmobQuery<MyUser> bmobQuery = new BmobQuery<MyUser>();
+                                bmobQuery.addWhereEqualTo("email", input.toString());
+                                bmobQuery.setLimit(1);//返回50条数据，如果不加上这条语句，默认返回10条数据
+                                bmobQuery.findObjects(new FindListener<MyUser>() {
+                                    @Override
+                                    public void done(List<MyUser> list, BmobException e) {
+                                        if (e == null) {
+                                            if(list == null || list.isEmpty()){
+                                                ToastUtils.show(mContext, "重置密码请求失败，请确认输入邮箱正确");
+                                            }
+                                            MyUser currentUser = list.get(0);
+                                            //password md5加密
+                                            String passwordEncode = MD5Util.encrypt(input.toString());
+                                            currentUser.setPassword(passwordEncode);
+                                            currentUser.update(new UpdateListener() {
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    ProgressUtils.dismiss();
+                                                    if (e != null)
+                                                        ToastUtils.show(mContext, "重置密码失败");
+                                                    else {
+                                                        ToastUtils.show(mContext, "重置密码成功");
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            ToastUtils.show(mContext, "查询失败！");
+                                        }
+                                    }
+                                });
                                 //找回密码
-                                BmobUser.resetPasswordByEmail(input.toString(), new UpdateListener() {
+                                /*BmobUser.resetPasswordByEmail(input.toString(), new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
@@ -262,7 +296,7 @@ public class LoginActivity extends BaseMVPActivity<LandContract.Presenter>
                                     ToastUtils.show(mContext, "重置密码请求失败，请确认输入邮箱正确！");
                                 }
                             }
-                        });
+                        });*/
                     }
                 })
                 .positiveText("确定")

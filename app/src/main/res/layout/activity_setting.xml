@@ -29,14 +29,14 @@
 
         <View style="@style/Divide.Default" />
 
-        <com.wzq.jz_app.widget.CommonItemLayout
+        <!--<com.wzq.jz_app.widget.CommonItemLayout
             android:id="@+id/cil_forget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cil_leftText="忘记密码"
             app:cil_rightText=">"
             app:cil_leftTextColor="@color/textBrown"
-            app:cil_rightTextColor="@color/textMaple" />
+            app:cil_rightTextColor="@color/textMaple" />-->
 
         <View style="@style/Divide.Default" />
     </LinearLayout>
