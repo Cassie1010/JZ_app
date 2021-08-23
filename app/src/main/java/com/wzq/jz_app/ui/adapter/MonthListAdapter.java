@@ -98,6 +98,7 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
 
         BBill bBill = mDatas.get(section).getList().get(position);
         holder.item_title.setText(bBill.getSortName());
+        holder.item_content.setText(bBill.getContent());
         holder.item_img.setImageDrawable(ImageUtils.getDrawable(bBill.getSortImg()));
         if (bBill.isIncome()) {
             holder.item_money.setText("+" + bBill.getCost());
@@ -162,6 +163,7 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
 
     public static class MyItemViewHolder extends ItemViewHolder {
         TextView item_title;
+        TextView item_content;
         TextView item_money;
         Button item_delete;
         Button item_edit;
@@ -172,6 +174,7 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
         MyItemViewHolder(View itemView) {
             super(itemView);
             item_title = itemView.findViewById(R.id.item_title);
+            item_content = itemView.findViewById(R.id.item_content);
             item_money = itemView.findViewById(R.id.item_money);
             item_delete = itemView.findViewById(R.id.item_delete);
             item_edit = itemView.findViewById(R.id.item_edit);
