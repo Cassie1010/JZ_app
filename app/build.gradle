@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 28
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.wzq.jz_app"
         minSdkVersion 16
-        targetSdkVersion 31
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -33,7 +33,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    buildToolsVersion '31.0.0'
+    buildToolsVersion '28.0.0'
 }
 greendao {
     //数据库的schema版本，也可以理解为数据库版本号

@@ -32,16 +32,16 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />
 
-                <fragment
+                <!--<fragment
                     android:id="@+id/main_activity_more"
                     android:name="com.wzq.jz_app.ui.fragment.MoreFragment"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
-                <fragment
+                    android:layout_height="fill_parent" />-->
+                <!--<fragment
                     android:id="@+id/main_activity_mine"
                     android:name="com.wzq.jz_app.ui.fragment.MineFragment"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent" />-->
             </FrameLayout>
         </FrameLayout>
 
@@ -75,14 +75,6 @@
                 android:checked="true"
                 android:textColor="@color/black"/>
 
-            <RadioButton
-                android:id="@+id/radio_chart"
-                style="@style/main_tab_bottom"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/footer_chart_selector"
-                android:text="图 表"
-                android:textColor="@color/black"/>
-
 
             <RadioButton
                 android:id="@+id/radio_add"
@@ -94,6 +86,14 @@
                 android:text="" />
 
             <RadioButton
+                android:id="@+id/radio_chart"
+                style="@style/main_tab_bottom"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/footer_chart_selector"
+                android:text="图 表"
+                android:textColor="@color/black"/>
+
+            <!--<RadioButton
                 android:id="@+id/radio_more"
                 style="@style/main_tab_bottom"
                 android:layout_weight="1"
@@ -106,7 +106,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@drawable/footer_mycenter_selector"
                 android:text="我 的"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"/>-->
         </RadioGroup>
     </LinearLayout>
 

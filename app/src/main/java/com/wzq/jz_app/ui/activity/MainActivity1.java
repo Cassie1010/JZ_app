@@ -83,23 +83,23 @@ public class MainActivity1 extends BaseActivity {
                 .setContent(R.id.main_activity_home));
         tabHost.addTab(tabHost.newTabSpec("chart").setIndicator("")
                 .setContent(R.id.fragment_month_chart));
-        tabHost.addTab(tabHost.newTabSpec("more").setIndicator("")
-                .setContent(R.id.main_activity_more));
-        tabHost.addTab(tabHost.newTabSpec("mine").setIndicator("")
-                .setContent(R.id.main_activity_mine));
+//        tabHost.addTab(tabHost.newTabSpec("more").setIndicator("")
+//                .setContent(R.id.main_activity_more));
+//        tabHost.addTab(tabHost.newTabSpec("mine").setIndicator("")
+//                .setContent(R.id.main_activity_mine));
 
-        if("4".equals(theme)){
+        /*if("4".equals(theme)){
             tb_group = findViewById(R.id.radio_mine);
             tb_group.setChecked(true);
             setCurrentTabWithAnim(tabHost.getCurrentTab(), 3, "mine");
-        }
-        RadioButton[] rb = new RadioButton[5];
+        }*/
+        RadioButton[] rb = new RadioButton[3];
         //将RadioButton装进数组中
         rb[0] = (RadioButton) findViewById(R.id.radio_home);
-        rb[1] = (RadioButton) findViewById(R.id.radio_chart);
-        rb[2] = (RadioButton) findViewById(R.id.radio_add);
-        rb[3] = (RadioButton) findViewById(R.id.radio_more);
-        rb[4] = (RadioButton) findViewById(R.id.radio_mine);
+        rb[1] = (RadioButton) findViewById(R.id.radio_add);
+        rb[2] = (RadioButton) findViewById(R.id.radio_chart);
+//        rb[3] = (RadioButton) findViewById(R.id.radio_more);
+//        rb[3] = (RadioButton) findViewById(R.id.radio_mine);
 
         //for循环对每一个RadioButton图片进行缩放
         for (int i = 0; i < rb.length; i++) {
@@ -141,19 +141,19 @@ public class MainActivity1 extends BaseActivity {
                         lastid = checkedId;
 ////                        getSupportActionBar().setTitle("图表");
                         break;
-                    case R.id.radio_more:
+                    /*case R.id.radio_more:
                         setCurrentTabWithAnim(currentTab, 2, "more");
                         lastid = checkedId;
 //					tabHost.setCurrentTabByTag("search");
 //                        getSupportActionBar().setTitle("新闻");
-                        break;
+                        break;*/
 
-                    case R.id.radio_mine:
+                    /*case R.id.radio_mine:
 //					tabHost.setCurrentTabByTag("mine");
                         setCurrentTabWithAnim(currentTab, 3, "mine");
                         lastid = checkedId;
 //                        getSupportActionBar().setTitle("我的");
-                        break;
+                        break;*/
 
                     case R.id.radio_add:
                         //fab点击事件
@@ -186,12 +186,12 @@ public class MainActivity1 extends BaseActivity {
             case R.id.radio_add:
                 menu.clear();
                 break;
-            case R.id.radio_more:
+            /*case R.id.radio_more:
                 menu.clear();
-                break;
-            case R.id.radio_mine:
+                break;*/
+            /*case R.id.radio_mine:
                 menu.clear();
-                break;
+                break;*/
         }
         return true;
     }
@@ -242,14 +242,14 @@ public class MainActivity1 extends BaseActivity {
                 tb_group = findViewById(R.id.radio_chart);
                 tb_group.setChecked(true);
                 break;
-            case R.id.radio_more:
+            /*case R.id.radio_more:
                 tb_group = findViewById(R.id.radio_more);
                 tb_group.setChecked(true);
-                break;
-            case R.id.radio_mine:
+                break;*/
+            /*case R.id.radio_mine:
                 tb_group = findViewById(R.id.radio_mine);
                 tb_group.setChecked(true);
-                break;
+                break;*/
             default:
                 tb_group = findViewById(R.id.radio_home);
                 tb_group.setChecked(true);

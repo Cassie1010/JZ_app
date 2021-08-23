@@ -164,6 +164,7 @@ public class BmobRepository {
                     Toast.makeText(getApplicationContext(), "数据同步成功", Toast.LENGTH_SHORT).show();
                     EventBus.getDefault().post(new SyncEvent(100));
                 } else{
+                    e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "数据同步失败", Toast.LENGTH_SHORT).show();
                     EventBus.getDefault().post(new SyncEvent(200));
             }}
