@@ -105,15 +105,15 @@ public class MainActivity1 extends BaseActivity {
         for (int i = 0; i < rb.length; i++) {
             //挨着给每个RadioButton加入drawable限制边距以控制显示大小
             Drawable[] drawables = rb[i].getCompoundDrawables();
-            //获取drawables，2/5表示图片要缩小的比例
-            Rect r = new Rect(0, 0, drawables[1].getMinimumWidth() * 7 / 10, drawables[1].getMinimumHeight() * 7 / 10);
-            //定义一个Rect边界
-            drawables[1].setBounds(r);
-            //给每一个RadioButton设置图片大小
-            if (i != 2) {
+            if (i != 1) {
+                //获取drawables，2/5表示图片要缩小的比例
+                Rect r = new Rect(0, 0, drawables[1].getMinimumWidth() * 7 / 30, drawables[1].getMinimumHeight() * 7 / 30);
+                //定义一个Rect边界
+                drawables[1].setBounds(r);
+                //给每一个RadioButton设置图片大小
                 rb[i].setCompoundDrawables(null, drawables[1], null, null);
             } else {
-                Rect r1 = new Rect(0, 0, drawables[1].getMinimumWidth() * 2 / 3, drawables[1].getMinimumHeight() * 2 / 3);
+                Rect r1 = new Rect(0, 0, drawables[1].getMinimumWidth() * 2 / 5, drawables[1].getMinimumHeight() * 2 / 5);
                 //定义一个Rect边界
                 drawables[1].setBounds(r1);
                 rb[i].setCompoundDrawables(null, drawables[1], null, null);
