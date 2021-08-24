@@ -6,6 +6,7 @@ import com.wzq.jz_app.model.bean.local.MonthChartBean;
 import com.wzq.jz_app.model.bean.local.MonthListBean;
 import com.wzq.jz_app.model.bean.remote.CoBill;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,29 +26,29 @@ public class BillUtils {
      */
     public static MonthListBean packageDetailList(List<BBill> list) {
         MonthListBean bean = new MonthListBean();
-        float t_income = 0;
-        float t_outcome = 0;
+        BigDecimal t_income = new BigDecimal("0");
+        BigDecimal t_outcome = new BigDecimal("0");
         List<MonthListBean.DaylistBean> daylist = new ArrayList<>();
         List<BBill> beanList = new ArrayList<>();
-        float income = 0;
-        float outcome = 0;
+        BigDecimal income = new BigDecimal("0");
+        BigDecimal outcome = new BigDecimal("0");
 
         String preDay = "";  //记录前一天的时间
         for (int i = 0; i < list.size(); i++) {
             BBill bBill = list.get(i);
             //计算总收入支出
             if (bBill.isIncome())
-                t_income += bBill.getCost();
+                t_income = t_income.add(new BigDecimal(Float.toString(bBill.getCost())));
             else
-                t_outcome += bBill.getCost();
+                t_outcome = t_outcome.add(new BigDecimal(Float.toString(bBill.getCost())));
 
             //判断后一个账单是否于前者为同一天
             if (i == 0 || preDay.equals(DateUtils.getDay(bBill.getCrdate()))) {
 
                 if (bBill.isIncome())
-                    income += bBill.getCost();
+                    income = income.add(new BigDecimal(Float.toString(bBill.getCost())));
                 else
-                    outcome += bBill.getCost();
+                    outcome = outcome.add(new BigDecimal(Float.toString(bBill.getCost())));
                 beanList.add(bBill);
 
                 if (i==0)
@@ -64,14 +65,14 @@ public class BillUtils {
 
                 //清空前一天的数据
                 beanList.clear();
-                income = 0;
-                outcome = 0;
+                income = new BigDecimal("0");;
+                outcome = new BigDecimal("0");;
 
                 //添加数据
                 if (bBill.isIncome())
-                    income += bBill.getCost();
+                    income = income.add(new BigDecimal(Float.toString(bBill.getCost())));
                 else
-                    outcome += bBill.getCost();
+                    outcome = outcome.add(new BigDecimal(Float.toString(bBill.getCost())));
                 beanList.add(bBill);
                 preDay = DateUtils.getDay(bBill.getCrdate());
             }
@@ -90,7 +91,7 @@ public class BillUtils {
 
         bean.setT_income(String.valueOf(t_income));
         bean.setT_outcome(String.valueOf(t_outcome));
-        bean.setT_total(String.valueOf(t_income-t_outcome));
+        bean.setT_total(String.valueOf(t_income.subtract(t_outcome)));
         bean.setDaylist(daylist);
         return bean;
     }
