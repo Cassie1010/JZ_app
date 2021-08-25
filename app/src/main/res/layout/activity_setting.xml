@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             app:cil_leftText="版本信息"
             app:cil_leftTextColor="@color/textBrown"
-            app:cil_rightText="v 1.0.1"
+            app:cil_rightText="v 2.0.1"
             app:cil_rightTextColor="@color/textMaple" />
 
         <View style="@style/Divide.Default" />

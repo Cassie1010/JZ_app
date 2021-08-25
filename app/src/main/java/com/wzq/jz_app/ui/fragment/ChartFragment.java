@@ -485,11 +485,11 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
                 else if (endIn.compareTo(endOut) == 0) {
                     advice = "收支平衡【没有存款】，建议您合理消费";
                 } else {
-                    advice = "恭喜你，【您有存款" + endIn.subtract(endOut) + "元了】，建议您享受生活，适当理财";
+                    advice = "恭喜您，【您有存款" + endIn.subtract(endOut) + "元了】，建议您享受生活，适当理财";
                 }
                 //年度分析
                 TextView textView = getViewById(R.id.sys);
-                textView.setText("分析：当前年度中" + timeIn + "月收入最高，" + timeOut + "月消费最高!" + advice);
+                textView.setText("分析：当前年度中" + timeIn + "月收入最高，" + timeOut + "月消费最高!\r\n" + advice);
             }
             initViews();
         } catch (Exception e) {
@@ -669,7 +669,7 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
             return;
         }
 
-        BigDecimal totalMoney = BigDecimal.ZERO;
+        BigDecimal totalMoney;
         if (TYPE) {
             centerTitle.setText("总支出");
             centerImg.setImageResource(R.mipmap.tallybook_output);
@@ -681,14 +681,17 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
             tMoneyBeanList = monthChartBean.getInSortlist();
             totalMoney = monthChartBean.getTotalIn();
         }
-        centerMoney.setText("" + totalMoney);
+        centerMoney.setText(totalMoney.toString());
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
         if (tMoneyBeanList != null && tMoneyBeanList.size() > 0) {
             layoutTypedata.setVisibility(View.VISIBLE);
             for (int i = 0; i < tMoneyBeanList.size(); i++) {
-                BigDecimal scale = new BigDecimal(Float.toString(tMoneyBeanList.get(i).getMoney())).divide(totalMoney);
+                BigDecimal scale = BigDecimal.ZERO;
+                if(totalMoney.compareTo(BigDecimal.ZERO) != 0){
+                    scale = new BigDecimal(Float.toString(tMoneyBeanList.get(i).getMoney())).divide(totalMoney, 6, BigDecimal.ROUND_HALF_UP);
+                }
                 float value = (scale.compareTo(new BigDecimal("0.06")) == -1) ? 0.06f : scale.floatValue();
                 entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSortImg())));
                 colors.add(getResources().getColor(R.color.home_1));
