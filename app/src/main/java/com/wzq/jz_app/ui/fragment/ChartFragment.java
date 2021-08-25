@@ -690,9 +690,9 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
             for (int i = 0; i < tMoneyBeanList.size(); i++) {
                 BigDecimal scale = BigDecimal.ZERO;
                 if(totalMoney.compareTo(BigDecimal.ZERO) != 0){
-                    scale = new BigDecimal(Float.toString(tMoneyBeanList.get(i).getMoney())).divide(totalMoney, 6, BigDecimal.ROUND_HALF_UP);
+                    scale = new BigDecimal(Float.toString(tMoneyBeanList.get(i).getMoney())).divide(totalMoney, 5, BigDecimal.ROUND_HALF_UP);
                 }
-                float value = (scale.compareTo(new BigDecimal("0.06")) == -1) ? 0.06f : scale.floatValue();
+                float value = (scale.compareTo(new BigDecimal("0.01")) == -1) ? 0.01f : scale.floatValue();
                 entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSortImg())));
                 colors.add(getResources().getColor(R.color.home_1));
                 colors.add(getResources().getColor(R.color.home_2));
