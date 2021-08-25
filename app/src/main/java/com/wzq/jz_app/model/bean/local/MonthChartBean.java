@@ -2,27 +2,28 @@ package com.wzq.jz_app.model.bean.local;
 
 import com.wzq.jz_app.model.bean.BaseBean;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class MonthChartBean extends BaseBean {
-    float totalOut;    //总支出
-    float totalIn;    //总收入
+    BigDecimal totalOut = BigDecimal.ZERO;    //总支出
+    BigDecimal totalIn = BigDecimal.ZERO;    //总收入
     List<SortTypeList> outSortlist;    //账单分类统计支出
     List<SortTypeList> inSortlist;    //账单分类统计收入
 
-    public float getTotalOut() {
+    public BigDecimal getTotalOut() {
         return totalOut;
     }
 
-    public void setTotalOut(float totalOut) {
+    public void setTotalOut(BigDecimal totalOut) {
         this.totalOut = totalOut;
     }
 
-    public float getTotalIn() {
+    public BigDecimal getTotalIn() {
         return totalIn;
     }
 
-    public void setTotalIn(float totalIn) {
+    public void setTotalIn(BigDecimal totalIn) {
         this.totalIn = totalIn;
     }
 

@@ -55,11 +55,14 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import cn.bmob.v3.BmobUser;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -125,12 +128,12 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
     ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
     private PieChart mPieChart;
     private TextView chart_date_year;
-    float maxIn = 0;
-    float maxOut = 0;
+    BigDecimal maxIn = BigDecimal.ZERO;
+    BigDecimal maxOut = BigDecimal.ZERO;
     int timeIn;
     int timeOut;
-    float endIn;
-    float endOut;
+    BigDecimal endIn = BigDecimal.ZERO;
+    BigDecimal endOut = BigDecimal.ZERO;
 
     //选择时间
     protected int mYear;
@@ -328,118 +331,124 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
     public void test(String year) {
         try {
             List<BBill> bBills = LocalRepository.getInstance().getBBillByUserIdWithYear(MyApplication.getCurrentUserId(), year);
-            float totalMoneyIn1 = 0, totalMoneyOut1 = 0;
-            float totalMoneyIn2 = 0, totalMoneyOut2 = 0;
-            float totalMoneyIn3 = 0, totalMoneyOut3 = 0;
-            float totalMoneyIn4 = 0, totalMoneyOut4 = 0;
-            float totalMoneyIn5 = 0, totalMoneyOut5 = 0;
-            float totalMoneyIn6 = 0, totalMoneyOut6 = 0;
-            float totalMoneyIn7 = 0, totalMoneyOut7 = 0;
-            float totalMoneyIn8 = 0, totalMoneyOut8 = 0;
-            float totalMoneyIn9 = 0, totalMoneyOut9 = 0;
-            float totalMoneyIn10 = 0, totalMoneyOut10 = 0;
-            float totalMoneyIn11 = 0, totalMoneyOut11 = 0;
-            float totalMoneyIn12 = 0, totalMoneyOut12 = 0;
-            float[] totalMoneyIn = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-            float[] totalMoneyOut = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            BigDecimal totalMoneyIn1 = BigDecimal.ZERO, totalMoneyOut1 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn2 = BigDecimal.ZERO, totalMoneyOut2 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn3 = BigDecimal.ZERO, totalMoneyOut3 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn4 = BigDecimal.ZERO, totalMoneyOut4 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn5 = BigDecimal.ZERO, totalMoneyOut5 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn6 = BigDecimal.ZERO, totalMoneyOut6 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn7 = BigDecimal.ZERO, totalMoneyOut7 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn8 = BigDecimal.ZERO, totalMoneyOut8 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn9 = BigDecimal.ZERO, totalMoneyOut9 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn10 = BigDecimal.ZERO, totalMoneyOut10 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn11 = BigDecimal.ZERO, totalMoneyOut11 = BigDecimal.ZERO;
+            BigDecimal totalMoneyIn12 = BigDecimal.ZERO, totalMoneyOut12 = BigDecimal.ZERO;
+            BigDecimal[] totalMoneyIn = null;
+//            Arrays.fill(totalMoneyIn, BigDecimal.ZERO);
+            BigDecimal[] totalMoneyOut = null;
+//            Arrays.fill(totalMoneyOut, BigDecimal.ZERO);
             for (int j = 0; j < bBills.size(); j++) {
                 String date = String.valueOf(DateUtils.getDay(bBills.get(j).getCrdate()));
                 String date1 = date.substring(5, 7);
                 switch (date1) {
                     case "01":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn1 += bBills.get(j).getCost();
+                            totalMoneyIn1 = totalMoneyIn1.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut1 += bBills.get(j).getCost();
+                            totalMoneyOut1 = totalMoneyOut1.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "02":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn2 += bBills.get(j).getCost();
+                            totalMoneyIn2 = totalMoneyIn2.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut2 += bBills.get(j).getCost();
+                            totalMoneyOut2 = totalMoneyOut2.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "03":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn3 += bBills.get(j).getCost();
+                            totalMoneyIn3 = totalMoneyIn3.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut3 += bBills.get(j).getCost();
+                            totalMoneyOut3 = totalMoneyOut3.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "04":
                         if (bBills.get(j).getIncome()) {
-                            float in = bBills.get(j).getCost();
-                            totalMoneyIn4 += in;
+                            totalMoneyIn4 = totalMoneyIn4.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            float out = bBills.get(j).getCost();
-                            totalMoneyOut4 += out;
+                            totalMoneyOut4 = totalMoneyOut4.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "05":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn5 += bBills.get(j).getCost();
+                            totalMoneyIn5 = totalMoneyIn5.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut5 += bBills.get(j).getCost();
+                            totalMoneyOut5 = totalMoneyOut5.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "06":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn6 += bBills.get(j).getCost();
+                            totalMoneyIn6 = totalMoneyIn6.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut6 += bBills.get(j).getCost();
+                            totalMoneyOut6 = totalMoneyOut6.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "07":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn7 += bBills.get(j).getCost();
+                            totalMoneyIn7 = totalMoneyIn7.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut7 += bBills.get(j).getCost();
+                            totalMoneyOut7 = totalMoneyOut7.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "08":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn8 += bBills.get(j).getCost();
+                            totalMoneyIn8 = totalMoneyIn8.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut8 += bBills.get(j).getCost();
+                            totalMoneyOut8 = totalMoneyOut8.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "09":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn9 += bBills.get(j).getCost();
+                            totalMoneyIn9 = totalMoneyIn9.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut9 += bBills.get(j).getCost();
+                            totalMoneyOut9 = totalMoneyOut9.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "10":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn10 += bBills.get(j).getCost();
+                            totalMoneyIn10 = totalMoneyIn10.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut10 = +bBills.get(j).getCost();
+                            totalMoneyOut10 = totalMoneyOut10.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));;
                         }
                         break;
                     case "11":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn11 = +bBills.get(j).getCost();
+                            totalMoneyIn11 = totalMoneyIn11.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));;;
                         } else {
-                            totalMoneyOut11 += bBills.get(j).getCost();
+                            totalMoneyOut11 = totalMoneyOut11.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                     case "12":
                         if (bBills.get(j).getIncome()) {
-                            totalMoneyIn12 += bBills.get(j).getCost();
+                            totalMoneyIn12 = totalMoneyIn12.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         } else {
-                            totalMoneyOut12 += bBills.get(j).getCost();
+                            totalMoneyOut12 = totalMoneyOut12.add(new BigDecimal(Float.toString(bBills.get(j).getCost())));
                         }
                         break;
                 }
             }
-            totalMoneyIn = new float[]{totalMoneyIn1, totalMoneyIn2, totalMoneyIn3, totalMoneyIn4, totalMoneyIn5, totalMoneyIn6, totalMoneyIn7, totalMoneyIn8, totalMoneyIn9, totalMoneyIn10, totalMoneyIn11, totalMoneyIn12};
-            totalMoneyOut = new float[]{totalMoneyOut1, totalMoneyOut2, totalMoneyOut3, totalMoneyOut4, totalMoneyOut5,
+            totalMoneyIn = new BigDecimal[]{totalMoneyIn1, totalMoneyIn2, totalMoneyIn3, totalMoneyIn4, totalMoneyIn5, totalMoneyIn6, totalMoneyIn7, totalMoneyIn8, totalMoneyIn9, totalMoneyIn10, totalMoneyIn11, totalMoneyIn12};
+            totalMoneyOut = new BigDecimal[]{totalMoneyOut1, totalMoneyOut2, totalMoneyOut3, totalMoneyOut4, totalMoneyOut5,
                     totalMoneyOut6, totalMoneyOut7, totalMoneyOut8, totalMoneyOut9, totalMoneyOut10, totalMoneyOut11, totalMoneyOut12};
             realList = new ArrayList<>();
             yoyList = new ArrayList<>();
             for (int i = 0; i < 12; i++) {
+                if(totalMoneyIn[i] == null){
+                    totalMoneyIn[i] = BigDecimal.ZERO;
+                }
+                if(totalMoneyOut[i] == null){
+                    totalMoneyOut[i] = BigDecimal.ZERO;
+                }
                 RealListEntity realListEntity = new RealListEntity();
                 YoyListEntity yoyListEntity = new YoyListEntity();
                 realListEntity.setAmount(totalMoneyIn[i] + "");//收入
@@ -454,29 +463,29 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
 
 
                 //分析年度消费最高、收入最高
-                endIn += totalMoneyIn[i];
-                endOut += totalMoneyOut[i];
-                if (totalMoneyIn[i] > maxIn) {   // 判断收入最大值
+                endIn = endIn.add(totalMoneyIn[i]);
+                endOut = endOut.add(totalMoneyOut[i]);
+                if (totalMoneyIn[i].compareTo(maxIn) == 1) {   // 判断收入最大值
                     maxIn = totalMoneyIn[i];
                     timeIn = i + 1;
                 }
-                if (totalMoneyOut[i] > maxOut) {
+                if (totalMoneyOut[i].compareTo(maxOut) == 1) {
                     maxOut = totalMoneyOut[i];
                     timeOut = i + 1;
                 }
             }
-            if (endIn == 0 && endOut == 0) {
+            if (endIn.compareTo(BigDecimal.ZERO) == 0 && endOut.compareTo(BigDecimal.ZERO) == 0) {
                 advice = "您当前没有账单记录！请开始使用APP记账吧！";
                 //年度分析
                 TextView textView = getViewById(R.id.sys);
                 textView.setText("分析：" + advice);
             } else {
-                if (endOut > endIn)
-                    advice = "收支不平衡【入不敷出】,建议您省吃俭用，少花钱！";
-                else if (endIn == endOut) {
+                if (endOut.compareTo(endIn) == 1)
+                    advice = "收支不平衡【入不敷出，" + endIn.subtract(endOut) +"元】,建议您省吃俭用，少花钱！";
+                else if (endIn.compareTo(endOut) == 0) {
                     advice = "收支平衡【没有存款】，建议您合理消费";
                 } else {
-                    advice = "收支不平衡【您有存款了】，建议您享受生活，适当理财";
+                    advice = "恭喜你，【您有存款" + endIn.subtract(endOut) + "元了】，建议您享受生活，适当理财";
                 }
                 //年度分析
                 TextView textView = getViewById(R.id.sys);
@@ -660,7 +669,7 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
             return;
         }
 
-        float totalMoney;
+        BigDecimal totalMoney = BigDecimal.ZERO;
         if (TYPE) {
             centerTitle.setText("总支出");
             centerImg.setImageResource(R.mipmap.tallybook_output);
@@ -679,8 +688,8 @@ public class ChartFragment extends BaseMVPFragment<MonthChartContract.Presenter>
         if (tMoneyBeanList != null && tMoneyBeanList.size() > 0) {
             layoutTypedata.setVisibility(View.VISIBLE);
             for (int i = 0; i < tMoneyBeanList.size(); i++) {
-                float scale = tMoneyBeanList.get(i).getMoney() / totalMoney;
-                float value = (scale < 0.06f) ? 0.06f : scale;
+                BigDecimal scale = new BigDecimal(Float.toString(tMoneyBeanList.get(i).getMoney())).divide(totalMoney);
+                float value = (scale.compareTo(new BigDecimal("0.06")) == -1) ? 0.06f : scale.floatValue();
                 entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSortImg())));
                 colors.add(getResources().getColor(R.color.home_1));
                 colors.add(getResources().getColor(R.color.home_2));

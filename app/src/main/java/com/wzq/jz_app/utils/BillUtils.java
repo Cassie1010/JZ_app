@@ -26,12 +26,12 @@ public class BillUtils {
      */
     public static MonthListBean packageDetailList(List<BBill> list) {
         MonthListBean bean = new MonthListBean();
-        BigDecimal t_income = new BigDecimal("0");
-        BigDecimal t_outcome = new BigDecimal("0");
+        BigDecimal t_income = BigDecimal.ZERO;
+        BigDecimal t_outcome = BigDecimal.ZERO;
         List<MonthListBean.DaylistBean> daylist = new ArrayList<>();
         List<BBill> beanList = new ArrayList<>();
-        BigDecimal income = new BigDecimal("0");
-        BigDecimal outcome = new BigDecimal("0");
+        BigDecimal income = BigDecimal.ZERO;
+        BigDecimal outcome = BigDecimal.ZERO;
 
         String preDay = "";  //记录前一天的时间
         for (int i = 0; i < list.size(); i++) {
@@ -103,8 +103,8 @@ public class BillUtils {
      */
     public static MonthChartBean packageChartList(List<BBill> list) {
         MonthChartBean bean = new MonthChartBean();
-        float t_income = 0;
-        float t_outcome = 0;
+        BigDecimal t_income = BigDecimal.ZERO;
+        BigDecimal t_outcome = BigDecimal.ZERO;
 
         Map<String, List<BBill>> mapIn = new HashMap<>();
         Map<String, Float> moneyIn = new HashMap<>();
@@ -113,8 +113,8 @@ public class BillUtils {
         for (int i = 0; i < list.size(); i++) {
             BBill bBill = list.get(i);
             //计算总收入支出
-            if (bBill.isIncome()) t_income += bBill.getCost();
-            else t_outcome += bBill.getCost();
+            if (bBill.isIncome()) t_income = t_income.add(new BigDecimal(Float.toString(bBill.getCost())));
+            else t_outcome = t_outcome.add(new BigDecimal(Float.toString(bBill.getCost())));
 
             //账单分类
             String sort = bBill.getSortName();
@@ -183,8 +183,8 @@ public class BillUtils {
     public static MonthAccountBean packageAccountList(List<BBill> list) {
 
         MonthAccountBean bean = new MonthAccountBean();
-        float t_income = 0;
-        float t_outcome = 0;
+        BigDecimal t_income = BigDecimal.ZERO;
+        BigDecimal t_outcome = BigDecimal.ZERO;
 
         Map<String, List<BBill>> mapAccount = new HashMap<>();
         Map<String, Float> mapMoneyIn = new HashMap<>();
@@ -192,8 +192,8 @@ public class BillUtils {
         for (int i = 0; i < list.size(); i++) {
             BBill bBill = list.get(i);
             //计算总收入支出
-            if (bBill.isIncome()) t_income += bBill.getCost();
-            else t_outcome += bBill.getCost();
+            if (bBill.isIncome()) t_income = t_income.add(new BigDecimal(Float.toString(bBill.getCost())));
+            else t_outcome = t_outcome.add(new BigDecimal(Float.toString(bBill.getCost())));
 
             String pay = bBill.getPayName();
 
