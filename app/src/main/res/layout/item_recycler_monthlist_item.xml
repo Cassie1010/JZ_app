@@ -43,8 +43,8 @@
             android:layout_toEndOf="@+id/item_img"
             android:layout_toRightOf="@+id/item_img"
             android:text="备注"
-            android:textColor="@color/textGray"
-            android:textSize="12sp" />
+            android:textColor="@color/gray"
+            android:textSize="10sp" />
 
         <LinearLayout
            android:layout_width="wrap_content"

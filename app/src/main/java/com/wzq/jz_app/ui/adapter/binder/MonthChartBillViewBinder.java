@@ -42,6 +42,7 @@ public class MonthChartBillViewBinder extends ItemViewBinder<BBill, MonthChartBi
 
         holder.rank.setText(holder.getAdapterPosition() + 1 + "");
         holder.title.setText(item.getSortName());
+        holder.content.setText(item.getContent());
         if (item.isIncome())
             holder.money.setText("+" + item.getCost());
         else
@@ -63,6 +64,7 @@ public class MonthChartBillViewBinder extends ItemViewBinder<BBill, MonthChartBi
 
         private View root;
         private TextView title;
+        private TextView content;
         private TextView money;
         private TextView rank;
 
@@ -70,6 +72,7 @@ public class MonthChartBillViewBinder extends ItemViewBinder<BBill, MonthChartBi
             super(view);
             root = view;
             title = view.findViewById(R.id.title);
+            content = view.findViewById(R.id.content);
             money = view.findViewById(R.id.money);
             rank = view.findViewById(R.id.rank);
         }

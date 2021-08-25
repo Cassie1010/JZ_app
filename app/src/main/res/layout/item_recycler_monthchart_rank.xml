@@ -29,6 +29,19 @@
         android:layout_toRightOf="@+id/rank" />
 
     <TextView
+        android:id="@+id/content"
+        android:layout_marginLeft="88dp"
+        android:layout_marginRight="110dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="备注"
+        android:layout_toEndOf="@+id/rank"
+        android:textColor="@color/gray"
+        android:textSize="10sp"
+        android:layout_toRightOf="@+id/rank" />
+
+    <TextView
         android:id="@+id/money"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
